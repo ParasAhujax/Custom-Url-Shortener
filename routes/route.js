@@ -1,7 +1,7 @@
 const express = require('express');
 const { generateNewShortUrl, redirectUrl, generateCustomUrl} = require('../controllers/urlController');
 const router = express.Router();
-const URL = require("../models/user")
+const URL = require("../models/url")
 
 router.post('/',generateNewShortUrl)
 

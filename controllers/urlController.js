@@ -1,21 +1,24 @@
 const shortid = require('shortid');
-const URL = require("../models/user");
+const URL = require("../models/url");
 
-async function generateNewShortUrl(req,res,next){
+async function generateNewShortUrl(req,res){
     try{
-        console.log(req.body);
         const {url} = req.body;
         
         if(!url){
-            return res.status(400).json({error:"url is required"});
+            return res.status(400).render("index",{
+                error:"url is required"
+            });
         }
 
         let urlExists = await URL.findOne({longUrl:url})
 
         if(urlExists){
-            return res.json({message:"short url already exists",shortUrl:urlExists.shortUrl});
+            return res.render('index',{
+                urlExists: "this url already exists",
+                shortUrl: urlExists.shortUrl,
+            });
         }
-
         const shortId = shortid(8);
         
         await URL.create({
@@ -23,8 +26,17 @@ async function generateNewShortUrl(req,res,next){
             longUrl:url,
             visitHistory:[]
         });
-        return res.json({shortUrl: shortId})
-    }catch(err){console.log(err.message)}
+
+        return res.render("index",{
+            shortUrl:shortId,
+        })
+        
+    }catch(err){
+        console.log(err.message);
+        return res.render("index",{
+            error: err.message
+        });
+    }
 }
 async function redirectUrl(req,res,next){
     try{
@@ -40,31 +52,48 @@ async function redirectUrl(req,res,next){
         });
 
         if(!url){
-            return res.status(400).json({error:"url doesnt exist"})
+            return res.status(400).render("index",{error:"url doesnt exist"})
         }
         
-        res.redirect("https://"+url.longUrl);
+        res.redirect(url.longUrl);
     }
-    catch(err){console.log(err.message)}
+    catch(err){
+        console.log(err.message);
+        return res.render('index',{
+            error: err.message
+        });
+    }
 }
-async function generateCustomUrl(req,res,next){
+async function generateCustomUrl(req,res){
     try{
         const {customUrl,url}=req.body;
         
         let urlExists = await URL.findOne({shortUrl: customUrl})
         
         if(urlExists){
-            return res.json({message:"this short url already exists",shortUrl:customUrl});
+            return res.render('index',{
+                urlExists: "this custom url already exists",
+                id: customUrl,
+            });
         }
-
         await URL.create({
             shortUrl:customUrl,
             longUrl:url,
             visitHistory: []
         });   
-        return res.json({shortUrl:customUrl});
-    }catch(err){console.log(err.message)}    
+
+        return res.render('index',{
+            shortUrl:customUrl
+        })     
+
+    }catch(err){
+        console.log(err.message)
+        return res.render('index',{
+            error: err.message
+        });
+    }    
 }
+
 module.exports = {
     generateNewShortUrl,
     redirectUrl,

@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const {connectToMongoDb} = require('./connect');
-const route = require('./routes/route');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
@@ -9,7 +8,14 @@ app.use(express.urlencoded({extended:false}))
 connectToMongoDb("mongodb://127.0.0.1:27017/short-url")
 .then(console.log("mongoDb connected"))
 
-app.use('/',route)
+app.set("view engine","ejs");
+app.set("views","./views");
+app.use(express.static('public'))
+
+const route = require('./routes/route');
+const StaticRoute = require('./routes/staticRoute');
+app.use('/url',route);
+app.use('/',StaticRoute);
 
 app.listen(3000,()=>{
     console.log("running on 3000");

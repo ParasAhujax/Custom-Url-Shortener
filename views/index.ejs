@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Url Shortener</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="nav">
+        <a href="http://localhost:3000/">
+        <div class="navbar">
+            <li>Home</li>
+        </div>
+        </a>
+    </div>
+
+    <h1 class="main-heading">Create Shorter Links!</h1>
+    <div class="form">
+        <form id="myForm" method="POST" action="/url/" >
+            <div class="main-input">
+                <input 
+                class="main-url-input"
+                type="text"
+                name="url"
+                placeholder="Paste your Long Url"
+                >
+                <button class="submit-button" type="submit">
+                    <img src="/arrow.png" alt="">
+                </button>
+            </div>
+            <div class="show-advance-options-container">
+                <input type="checkbox" id="show-advance-options">
+                <label for="show-advance-options">Show Advance Options</label>
+            </div>
+
+            <div class="custom-url">
+                <input 
+                type="text" 
+                class="custom-url-input"
+                name="customUrl"
+                placeholder="Enter your custom Url"
+                >
+            </div>
+        </form>
+        <div class="result-container">            
+            <%if(locals.shortUrl){
+                if(locals.urlExists){ %>
+                    <p><%=urlExists %></p>
+                <% }else{%>
+                    <p>Url Generated Successfully</p>
+                <%}%>
+                <h4>
+                    Url: 
+                    <a href="http://localhost:3000/<%=shortUrl%>" target="_blank">
+                        http://localhost:3000/<%=shortUrl%>
+                    </a>
+                </h4> 
+            <% }%>
+            <%if(locals.error){%>
+                <script>alert("<%=locals.error%>");</script>
+            <%}%>
+                
+            
+        </div>
+    </div>
+    <div class="table">
+        <% if(locals.urls){ %>
+        <table class="table">
+            <thead >
+                <th>S.No</th>
+                <th>Original Url</th>
+                <th>Short Url</th>
+                <th>Clicks</th>
+            </thead>
+            <tbody>
+                <% urls.forEach((url,index) => {%>
+                    <tr>
+                        <td><%=index+1%></td>
+                        <td class="originalUrl">
+                            <a href="<%=url.longUrl  %>" target="_blank">
+                                <%=url.longUrl%>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="http://localhost:3000/<%=url.shortUrl%>" target="_blank">
+                            short.link/<%=url.shortUrl%>
+                            </a>
+                        </td>
+                        <td><%=url.visitHistory.length%></td>
+                    </tr>
+                <%}) %>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            const form = document.getElementById("myForm")
+            form.addEventListener("submit",function(){
+                event.preventDefault();
+            })
+        })
+    </script> -->
+    <script>
+        const showAdvanceOptionCheckbox = document.getElementById("show-advance-options");
+        const customUrlInput = document.querySelector(".custom-url-input");
+        const form = document.getElementById("myForm")
+
+        showAdvanceOptionCheckbox.addEventListener('change',function(){
+            if(this.checked){
+                customUrlInput.style.display = 'block';
+                customUrlInput.required = true;
+                form.action = "/url/custom"
+            }
+            else{
+                customUrlInput.style.display = 'none';
+                customUrlInput.required = false;
+                form.action = "/url"
+            }
+        })
+    </script>
+</body>
+</html>

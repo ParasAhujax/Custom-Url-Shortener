@@ -1,0 +1,137 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+}
+body,html{
+    height: 100%;
+    width: 100%;
+    background-color: #ebebeb;    
+}
+#nav{
+    width: 100%;
+    height:6vh;
+    font-size: 2.5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    padding: 15px 40px 7px 7px;
+}
+#nav a{
+    color: black;
+    text-decoration: none;
+} 
+.navbar li{
+    list-style-type: none;
+    border: 2px solid black;
+    padding:5px;
+    border-radius: 5px;
+}
+.main-heading{
+    margin-top: 6vh;
+    margin-bottom: 2vh;
+    font-size: 40px;
+    text-align: center;
+    font-weight: lighter;
+}
+.form{
+    width: 50%;
+    margin: 2vh auto 3vh auto;
+}
+#myForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main-input{
+    margin: 20px;
+}
+.main-url-input{
+    width: 35vw;
+    height: 6vh;
+    border-radius: 25px 0 0 25px;
+    font-family:sans-serif;
+    font-size: 2vh;
+    padding:20px;
+    padding-right: 4vw;
+    border: 0.5px solid transparent;
+}
+.form button{
+    width:4vw;
+    height:6vh;
+    background-color:white ;
+    border-radius: 0 25px 25px 0;
+    border: 0.5px solid transparent;
+    cursor: pointer;
+    position: absolute;
+}
+.show-advance-options-container{
+    display: flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+#show-advance-options{
+    width:2vh;
+    height: 2vh;
+}
+.custom-url{
+    display: flex;
+    justify-content: center;
+}
+.custom-url-input{
+    width: 25vw;
+    height: 4vh;
+    border-radius: 25px;
+    font-family:'DM Sans',sans-serif;
+    font-size: 2vh;
+    padding:20px;
+    border: 0.5px solid transparent;
+    display: none;
+}
+.submit-button img{
+    width: 4.5vh;
+    height: 4.5vh;
+    display: flex;
+}
+.table{
+    height: auto;
+    margin: auto;
+    margin-top: 5vh;
+    width: 70vw;
+    background-color: white;
+    /* padding: 10px; */
+    border-radius: 8px;
+}
+th,td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+    text-align: center;
+    padding: 10px;
+}
+td{
+    border-top: 0.5px solid #c6c6c6;
+}
+
+.table a{
+    text-decoration: none;
+    color: rgb(29, 198, 255);
+}
+.result-container{
+    margin: auto;
+    margin-top: 2vh;
+    width:20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.result-container h4{
+    margin-top:1vh;
+}
+.result-container a{
+    text-decoration: none;
+    color: rgb(0, 146, 194);
+}
